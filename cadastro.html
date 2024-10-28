@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./img/tina-logo.jpg">
+    <link rel="stylesheet" href="form.css">
+    <title>Cadastro || Chat</title>
+</head>
+<body>
+    <div class="form-container">
+        <h1 id="form-title">Cadastro</h1>
+        <form id="register-form" action="/register" method="POST">
+            <label for="nome">Nome do usuário:</label>
+            <input type="text" id="register-name" name="username" placeholder="ex: Jose33@" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="register-email" name="email" required placeholder="ex: joao@gmail.com">
+
+            <label for="password">Senha:</label>
+            <input type="password" id="register-password" name="password" required placeholder="********" min-length="8">
+
+            <label for="confirmarSenha">Confirme a senha</label>
+            <input type="password" id="register-password2" name="password2" required placeholder="********" min-length="8">
+
+            <div class="mostrarSenha">
+                Mostrar Senha<input type="checkbox" onclick="MostrarSenha()">
+            </div>
+
+            <br><br>
+            <button type="submit">Cadastrar</button>
+            <br><br>
+            <div class="dont">
+                <p>Já tem uma conta? <a href="login.html" style="color: teal;">Faça aqui o login</a></p>
+            </div>
+
+            <div class="footer">
+                <footer>
+                    <p>Desenvolvido por <a href="#">Eliobros Tech</a></p>
+                </footer>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function MostrarSenha() {
+            const senha1 = document.getElementById('register-password');
+            const senha2 = document.getElementById('register-password2');
+            if (senha1.type === "password") {
+                senha1.type = "text";
+                senha2.type = "text";
+            } else {
+                senha1.type = "password";
+                senha2.type = "password";
+            }
+        }
+ 
+document.getElementById('register-form').addEventListener('submit', async function() {
+    const username = document.getElementById('register-name').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+
+    const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+    });
+
+    const result = await response.json();
+    alert(result.message || result.error);
+    if (response.ok) {
+        window.location.href = 'tinachat.netlify.app'; // Redireciona para o chat após o registro
+    }
+});
+</script>
+
+</body>
+                             </html>

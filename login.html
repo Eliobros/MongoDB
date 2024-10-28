@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="form.css">
+    <link rel="icon" type="image/x-icon" href="./img/tina-logo.jpg">
+    <title>Login || Chat</title>
+</head>
+<body>
+    <div class="form-container">
+        <h1 id="form-title">Login</h1>
+        <form id="login-form" action="/login" method="POST">
+            <label for="nome">Nome do usuário ou e-mail:</label>
+            <input type="text" id="register-name" name="username" required placeholder="nome do usuário ou e-mail">
+            <label for="senha">Senha:</label>
+            <input type="password" required id="register-password" name="password" placeholder="********">
+            <br><br>
+            <button type="submit">Login</button>
+            <br><br>
+            <div class="dont">
+                <p>Não tem uma conta? <a href="cadastro.html" style="color: teal;">Faça aqui o cadastro</a></p>
+            </div>
+
+            <div class="footer">
+                <footer>
+                    <p>Desenvolvido por <a href="#">Eliobros Tech</a></p>
+                </footer>
+            </div>
+        </form>
+    </div>
+    
+    script>
+document.getElementById('login-form').addEventListener('submit', async function() {
+    const username = document.getElementById('register-name').value;
+    const password = document.getElementById('register-password').value;
+
+    const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+    });
+
+    const result = await response.json();
+    alert(result.message || result.error);
+    if (response.ok) {
+        window.location.href = 'tinachat.netlify.app; // Redireciona para o chat após o login
+    }
+});
+</script>
+</body>
+              </html>
